@@ -2,10 +2,8 @@ package entities;
 
 import jakarta.persistence.*;
 
-import java.util.Collection;
-
 @Entity
-@Table(name = "departamentos", schema = "miBD")
+@Table(name = "departamentos", schema = "miBD", catalog = "")
 public class DepartamentosEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -17,8 +15,6 @@ public class DepartamentosEntity {
     @Basic
     @Column(name = "loc", nullable = true, length = 15)
     private String loc;
-    @OneToMany(mappedBy = "departamentosByDeptNo")
-    private Collection<EmpleadosEntity> empleadosByDeptNo;
 
     public Byte getDeptNo() {
         return deptNo;
@@ -60,17 +56,11 @@ public class DepartamentosEntity {
 
     @Override
     public int hashCode() {
-        int result = deptNo != null ? deptNo.hashCode() : 0;
+       int result = deptNo != null ? deptNo.hashCode() : 0;
         result = 31 * result + (dnombre != null ? dnombre.hashCode() : 0);
         result = 31 * result + (loc != null ? loc.hashCode() : 0);
         return result;
     }
 
-    public Collection<EmpleadosEntity> getEmpleadosByDeptNo() {
-        return empleadosByDeptNo;
-    }
 
-    public void setEmpleadosByDeptNo(Collection<EmpleadosEntity> empleadosByDeptNo) {
-        this.empleadosByDeptNo = empleadosByDeptNo;
-    }
 }

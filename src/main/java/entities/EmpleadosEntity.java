@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "empleados", schema = "miBD")
+@Table(name = "empleados", schema = "miBD", catalog = "")
 public class EmpleadosEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -30,11 +30,16 @@ public class EmpleadosEntity {
     @Column(name = "comision", nullable = true, precision = 2)
     private Double comision;
     @Basic
-    @Column(name = "dept_no", nullable = false, insertable = false, updatable = false)
+    @Column(name = "dept_no", nullable = false)
     private Byte deptNo;
-    @ManyToOne
-    @JoinColumn(name = "dept_no", referencedColumnName = "dept_no", nullable = false)
-    private DepartamentosEntity departamentosByDeptNo;
+
+    public EmpleadosEntity(String apellido, String oficio, Double salario) {
+        this.apellido = apellido;
+        this.oficio = oficio;
+        this.salario = salario;
+    }
+
+    public EmpleadosEntity() {}
 
     public Short getEmpNo() {
         return empNo;
@@ -130,13 +135,5 @@ public class EmpleadosEntity {
         result = 31 * result + (comision != null ? comision.hashCode() : 0);
         result = 31 * result + (deptNo != null ? deptNo.hashCode() : 0);
         return result;
-    }
-
-    public DepartamentosEntity getDepartamentosByDeptNo() {
-        return departamentosByDeptNo;
-    }
-
-    public void setDepartamentosByDeptNo(DepartamentosEntity departamentosByDeptNo) {
-        this.departamentosByDeptNo = departamentosByDeptNo;
     }
 }
